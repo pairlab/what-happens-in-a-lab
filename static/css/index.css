@@ -1,0 +1,412 @@
+/* Based on the Nerfies project page (https://github.com/nerfies/nerfies.github.io), CC BY-SA 4.0. */
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  color: #363636;
+}
+
+.publication-title,
+.publication-authors,
+.title {
+  font-family: 'Google Sans', 'Noto Sans', sans-serif;
+}
+
+html {
+  scroll-padding-top: 4rem;
+  scroll-behavior: smooth;
+}
+
+/* Render the whole page slightly zoomed out. */
+body {
+  zoom: 0.9;
+}
+
+/* ---------- Header ---------- */
+
+.author-block {
+  display: inline-block;
+  margin-right: 0.35rem;
+}
+
+.publication-authors a {
+  color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+  text-decoration: underline;
+}
+
+.publication-venue {
+  color: #555;
+  font-weight: bold;
+}
+
+.link-block a {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.button.is-dark[disabled] {
+  opacity: 0.45;
+}
+
+/* ---------- Section nav ---------- */
+
+.section-nav {
+  border-bottom: 1px solid #eee;
+  box-shadow: none;
+}
+
+.section-nav .navbar-item {
+  font-size: 0.95rem;
+}
+
+.section-nav .navbar-item:hover {
+  color: hsl(204, 86%, 53%);
+}
+
+/* ---------- Teaser ---------- */
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 2rem;
+}
+
+.teaser .subtitle {
+  margin-top: 1rem;
+}
+
+/* ---------- Stats strip ---------- */
+
+.stats {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.stat-number {
+  font-family: 'Google Sans', 'Noto Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: #222;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* ---------- Media ---------- */
+
+.figure-img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.figure-caption {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.video-frame {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Placeholder for media that still needs to be recorded/exported.
+   Replace each .media-placeholder with an <img> or <video> once the asset exists. */
+.media-placeholder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 2px dashed #c4c4c4;
+  border-radius: 8px;
+  background: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  color: #777;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.media-placeholder.is-square { aspect-ratio: 1 / 1; }
+.media-placeholder.is-wide { aspect-ratio: 21 / 9; }
+
+.media-placeholder .ph-kind {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 0.35rem;
+}
+
+.media-placeholder .ph-icon {
+  font-size: 1.6rem;
+  color: #bbb;
+  margin-bottom: 0.4rem;
+}
+
+/* ---------- Draft markers (remove before release) ---------- */
+
+.tbd {
+  background: #fff3b0;
+  padding: 0 0.2em;
+  border-radius: 3px;
+}
+
+body.hide-drafts .tbd { background: none; padding: 0; }
+body.hide-drafts .draft-banner { display: none; }
+
+.draft-banner {
+  background: #fff8d6;
+  border-bottom: 1px solid #f0e2a0;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0.4rem 1rem;
+}
+
+.draft-banner button {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* ---------- Pipeline steps / hierarchy ---------- */
+
+.step-card {
+  height: 100%;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.step-card .step-num {
+  display: inline-block;
+  width: 1.7rem;
+  height: 1.7rem;
+  line-height: 1.7rem;
+  border-radius: 50%;
+  background: #363636;
+  color: #fff;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.step-card h4 {
+  margin-bottom: 0.4rem !important;
+}
+
+.step-card p {
+  font-size: 0.92rem;
+}
+
+.hierarchy {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.hierarchy .tier {
+  flex: 1 1 160px;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 0.8rem;
+  margin-bottom: 0;
+  display: block;
+}
+
+.hierarchy .tier-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.hierarchy .tier-def {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0.2rem 0 0.5rem;
+}
+
+.hierarchy .tier-ex {
+  font-size: 0.85rem;
+  font-family: ui-monospace, Menlo, monospace;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 0.3rem 0.45rem;
+}
+
+.hierarchy .arrow {
+  align-self: center;
+  color: #aaa;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .hierarchy .arrow { display: none; }
+}
+
+/* ---------- Task cards ---------- */
+
+.task-card {
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 0.75rem;
+  height: 100%;
+}
+
+.task-card .task-name {
+  font-weight: 700;
+  margin: 0.6rem 0 0.2rem;
+}
+
+.task-card .task-desc {
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+
+.task-card .task-success {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* ---------- Tables ---------- */
+
+.table-container {
+  margin-bottom: 0.5rem;
+}
+
+.results-table td,
+.results-table th {
+  vertical-align: middle;
+}
+
+.results-table td.num,
+.results-table th.num {
+  text-align: center !important;
+}
+
+.results-table .group-row td {
+  background: #fafafa;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+/* ---------- Callouts ---------- */
+
+.takeaway {
+  border-left: 4px solid hsl(204, 86%, 53%);
+  background: #f5faff;
+  padding: 0.75rem 1rem;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 1rem;
+}
+
+details.more {
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-top: 1rem;
+}
+
+details.more summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.footer .icon-link {
+  font-size: 25px;
+  color: #000;
+}
+
+/* ---------- Title extras ---------- */
+
+.publication-subtitle {
+  font-family: 'Google Sans', 'Noto Sans', sans-serif;
+  color: #555;
+  margin-top: 0.25rem !important;
+}
+
+.publication-affiliations {
+  color: #555;
+  margin-top: 0.6rem;
+}
+
+/* ---------- Ground-truth protocol excerpt ---------- */
+
+.gt-list {
+  font-size: 0.9rem;
+  margin-top: 0.25rem !important;
+}
+
+.gt-list li {
+  margin-bottom: 0.1rem;
+}
+
+/* ---------- Teaser image ---------- */
+
+.teaser-img {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+/* ---------- Results browser ---------- */
+
+.rb-hint { font-size: 0.9rem; color: #666; margin-bottom: 0.75rem; }
+.rb-sort { font-size: 0.85rem; margin-bottom: 0.5rem; }
+.rb-table th, .rb-table td { text-align: center !important; vertical-align: middle; font-size: 0.85rem; }
+.rb-table .rb-task { text-align: left !important; }
+.rb-table tbody tr { cursor: pointer; }
+.rb-table tbody tr.is-selected { background: #eef4fb !important; color: inherit !important; box-shadow: inset 3px 0 0 #363636; }
+.rb-table tbody tr:focus-visible { outline: 2px solid hsl(204, 86%, 53%); outline-offset: -2px; }
+.rb-cell { border-radius: 4px; padding: 0.1rem 0.25rem; font-variant-numeric: tabular-nums; }
+.rb-detail { border: 1px solid #e6e6e6; border-radius: 8px; padding: 1rem; position: sticky; top: 1rem; }
+.rb-detail .media-placeholder { font-size: 0.8rem; }
+.media-placeholder.is-success { border-color: #48c78e; background: #f2fbf6; }
+.media-placeholder.is-failure { border-color: #f14668; background: #fff5f7; }
+.rb-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #777; margin-top: 0.5rem; }
+.rb-src { font-family: ui-monospace, Menlo, monospace; font-size: 0.72rem; color: #888; word-break: break-all; }
+.chip { display: inline-block; background: #f3f3f3; border-radius: 999px; padding: 0.1rem 0.6rem; font-size: 0.8rem; margin: 0 0.3rem 0.3rem 0; }
+.strip { display: flex; flex-wrap: wrap; gap: 2px; margin: 0.25rem 0 0.75rem; }
+.sq { width: 9px; height: 9px; border-radius: 2px; }
+.sq.s { background: #48c78e; }
+.sq.f { background: #f14668; }
+.sq.p { background: #d5d5d5; }
+.trial-row { font-size: 0.8rem; margin-bottom: 0.5rem; }
+.trial-head { display: flex; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+.trial-row .strip { margin: 0.15rem 0 0; flex-wrap: nowrap; }
+.trial-row .sq { width: 14px; height: 14px; }
+.trial-meta { color: #666; font-variant-numeric: tabular-nums; }
+.rb-tip {
+  position: fixed; pointer-events: none; z-index: 50; max-width: 280px;
+  background: #222; color: #fff; font-family: 'Noto Sans', sans-serif; font-size: 0.8rem; line-height: 1.35;
+  padding: 0.35rem 0.55rem; border-radius: 4px; opacity: 0; transition: opacity 0.1s;
+}
+.rb-tip .rb-src { color: #bbb; }
+
+/* ---------- Action-object map ---------- */
+
+.seg { display: inline-flex; border: 1px solid #dbdbdb; border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; background: #fff; padding: 0.3rem 0.75rem; font-size: 0.85rem; cursor: pointer; }
+.seg button + button { border-left: 1px solid #dbdbdb; }
+.seg button.is-active { background: #363636; color: #fff; }
+.pm-controls { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.pm-n { font-size: 0.85rem; white-space: nowrap; }
+.pm-n input { vertical-align: middle; }
+#pm-chart svg { display: block; font-family: 'Noto Sans', sans-serif; }
+.pm-legend { font-size: 0.8rem; color: #555; display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.4rem; }
+.pm-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -1px; margin-right: 0.3rem; }

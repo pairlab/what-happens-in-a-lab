@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="442 first-person videos from 13 materials research labs reveal at least 108 distinct lab actions. We organize them into actions, skills, tasks, and procedures, and teach a bimanual robot the ten most common action-object pairs.">
+  <meta name="keywords" content="laboratory automation, materials science, robotics, egocentric video, vision-language models, self-driving labs, bimanual manipulation, teleoperation, imitation learning">
+  <title>What Happens in a Materials Research Lab?</title>
+
+  <meta property="og:title" content="What Happens in a Materials Research Lab?">
+  <meta property="og:description" content="A dataset and analysis of lab work for enabling a generalized robot lab assistant.">
+  <meta property="og:image" content="https://www.pair.toronto.edu/what-happens-in-a-lab/static/images/teaser.jpg">
+  <meta property="og:url" content="https://www.pair.toronto.edu/what-happens-in-a-lab/">
+  <link rel="canonical" href="https://www.pair.toronto.edu/what-happens-in-a-lab/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+</head>
+<body data-public>
+
+
+<nav class="navbar section-nav is-spaced" role="navigation" aria-label="section navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="section-menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu" id="section-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#overview">Overview</a>
+      <a class="navbar-item" href="#dataset">Dataset</a>
+      <a class="navbar-item" href="#findings">Findings</a>
+      <a class="navbar-item" href="#annotation">Annotation</a>
+      <a class="navbar-item" href="#robot">Robot Learning</a>
+      <a class="navbar-item" href="#takeaways">Takeaways</a>
+      <a class="navbar-item" href="#bibtex">BibTeX</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">What Happens in a Materials Research Lab?</h1>
+          <h2 class="subtitle is-4 publication-subtitle">A Dataset and Analysis of Lab Work for Enabling a Generalized Robot Lab Assistant</h2>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Alexandra Wnuk<sup>1</sup>,</span>
+            <span class="author-block">Lucas Long<sup>2</sup>,</span>
+            <span class="author-block">Shrikar Seshadri<sup>3</sup>,</span>
+            <span class="author-block">Ujaan Rakshit<sup>3</sup>,</span>
+            <span class="author-block">Nandika Kohli<sup>2</sup>,</span>
+            <span class="author-block">Nicholas Hernandez<sup>3</sup>,</span>
+            <span class="author-block">Eren Ozmen<sup>1</sup>,</span>
+            <span class="author-block">Mark D. Losego<sup>1</sup>,</span>
+            <span class="author-block">Shreyas Kousik<sup>2,*</sup>,</span>
+            <span class="author-block">Animesh Garg<sup>3,*</sup></span>
+          </div>
+
+          <div class="is-size-6 publication-affiliations">
+            <span class="author-block"><sup>1</sup>School of Materials Science and Engineering,</span>
+            <span class="author-block"><sup>2</sup>George W. Woodruff School of Mechanical Engineering,</span>
+            <span class="author-block"><sup>3</sup>School of Interactive Computing</span>
+            <br>
+            <span class="author-block">Georgia Institute of Technology, Atlanta, GA, USA</span>
+            <br>
+            <span class="author-block"><sup>*</sup>Corresponding authors</span>
+          </div>
+
+
+          <div class="publication-links" style="margin-top: 1rem;">
+            <span class="link-block">
+              <a href="#" class="button is-normal is-rounded is-dark" disabled>
+                <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="#" class="button is-normal is-rounded is-dark" disabled>
+                <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="#" class="button is-normal is-rounded is-dark" disabled>
+                <span class="icon"><i class="fas fa-film"></i></span><span>Supp. Videos</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="#" class="button is-normal is-rounded is-dark" disabled>
+                <span class="icon"><i class="fas fa-database"></i></span><span>Dataset</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="#" class="button is-normal is-rounded is-dark" disabled>
+                <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img class="teaser-img" src="./static/images/teaser.jpg"
+           alt="A general-purpose lab robot at a bench, surrounded by twelve lab procedures from the dataset (assembly, ultrasonication, powder batching, solution prep, spin coating, sputter coating, wafer cutting, ball milling, plasma cleaning, annealing, pipetting, spray coating) over a collage of first-person lab video frames.">
+      <h2 class="subtitle has-text-centered">
+        We recorded what materials researchers do at the bench, catalogued every action and object, and taught a
+        two-armed robot the ten most common ones.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section stats">
+  <div class="container is-max-desktop">
+    <div class="columns is-mobile is-multiline has-text-centered">
+      <div class="column is-one-third-mobile">
+        <div class="stat-number">442</div>
+        <div class="stat-label">first-person videos</div>
+      </div>
+      <div class="column is-one-third-mobile">
+        <div class="stat-number">30+ h</div>
+        <div class="stat-label">of footage</div>
+      </div>
+      <div class="column is-one-third-mobile">
+        <div class="stat-number">13</div>
+        <div class="stat-label">research labs</div>
+      </div>
+      <div class="column is-one-third-mobile">
+        <div class="stat-number">60+</div>
+        <div class="stat-label">task types</div>
+      </div>
+      <div class="column is-one-third-mobile">
+        <div class="stat-number">108+</div>
+        <div class="stat-label">unique actions</div>
+      </div>
+      <div class="column is-one-third-mobile">
+        <div class="stat-number">10</div>
+        <div class="stat-label">tasks taught to a robot</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Increased experimental data generation is essential to realize the true potential of data science for
+            materials discovery and commercialization. While self-driving laboratories with specialized automation
+            offer one pathway to high-volume data generation, general-purpose robotics could leverage existing
+            human-centric laboratory infrastructure and adapt to less-structured research environments, where diverse
+            materials, samples, and tools are manipulated within evolving workflows rather than predefined sequences.
+            This study collects and analyzes 442 egocentric videos comprising over 30 hours of activity across 13
+            materials research laboratories. At least 108 unique actions spanning more than 60 task types are
+            identified, revealing a long-tailed distribution of actions that underscores the limitations of
+            specialized automation. A hierarchical framework organizes workflows into actions, skills, tasks, and
+            procedures and demonstrates the importance of linking these actions to their manipulated objects.
+            Using the ten most frequently identified action&ndash;object pairs, existing vision-language-action models
+            are post-trained via imitation learning on teleoperated demonstrations. Results show that contemporary
+            robotic systems can learn common laboratory manipulations from modest datasets, while highlighting which
+            dexterous tasks remain challenging. Together, these contributions establish an empirical foundation for
+            general-purpose robotic assistants that can adapt to the researcher&rsquo;s evolving experimental
+            workflows rather than requiring researchers to adapt to specialized automation systems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="overview">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Overview</h2>
+
+    <figure>
+      <img class="figure-img" src="./static/images/fig1_overview.jpg"
+           alt="Pipeline overview: chest-mounted camera, paired video and written procedure, VLM processing, and the robot platform, with example procedures such as spin coating and powder batching.">
+      <figcaption class="figure-caption">
+        <strong>Figure 1.</strong> (a) Researchers record procedures with a chest-mounted camera. (b) Each video is
+        paired with a written procedure. (c) A vision-language model (VLM) identifies the actions in each video.
+        (d) The most frequent actions guide which tasks a robot learns.
+      </figcaption>
+    </figure>
+
+    <div class="columns is-multiline" style="margin-top: 1.5rem;">
+      <div class="column is-half-tablet is-one-quarter-desktop">
+        <div class="step-card">
+          <span class="step-num">1</span>
+          <h4 class="title is-6">Record</h4>
+          <p>Researchers film their own procedures and write down every step.</p>
+        </div>
+      </div>
+      <div class="column is-half-tablet is-one-quarter-desktop">
+        <div class="step-card">
+          <span class="step-num">2</span>
+          <h4 class="title is-6">Annotate</h4>
+          <p>A VLM labels each video with verb&ndash;object actions.</p>
+        </div>
+      </div>
+      <div class="column is-half-tablet is-one-quarter-desktop">
+        <div class="step-card">
+          <span class="step-num">3</span>
+          <h4 class="title is-6">Analyze</h4>
+          <p>Action counts across 13 labs show what matters most.</p>
+        </div>
+      </div>
+      <div class="column is-half-tablet is-one-quarter-desktop">
+        <div class="step-card">
+          <span class="step-num">4</span>
+          <h4 class="title is-6">Teach a robot</h4>
+          <p>The top 10 action&ndash;object pairs are learned from teleoperated demos.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="title is-5" style="margin-top: 1.5rem;">Four levels of lab work</h3>
+    <div class="hierarchy">
+      <div class="tier">
+        <div class="tier-name">Action</div>
+        <div class="tier-def">Lowest-level motion</div>
+        <div class="tier-ex">pick &middot; place &middot; press &middot; dispense</div>
+      </div>
+      <span class="arrow"><i class="fas fa-chevron-right"></i></span>
+      <div class="tier">
+        <div class="tier-name">Skill</div>
+        <div class="tier-def">Actions for one operation</div>
+        <div class="tier-ex">pour a solvent &middot; scoop a powder</div>
+      </div>
+      <span class="arrow"><i class="fas fa-chevron-right"></i></span>
+      <div class="tier">
+        <div class="tier-name">Task</div>
+        <div class="tier-def">A sequence of skills</div>
+      </div>
+      <span class="arrow"><i class="fas fa-chevron-right"></i></span>
+      <div class="tier">
+        <div class="tier-name">Procedure</div>
+        <div class="tier-def">A full experimental workflow</div>
+        <div class="tier-ex">powder batching &middot; spin coating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="dataset">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">The Lab Work Dataset</h2>
+
+    <div class="columns">
+      <div class="column">
+        <div class="table-container">
+          <table class="table is-fullwidth is-narrow">
+            <tbody>
+              <tr><th>Size</th><td>442 videos, 30.5 h, 21 researchers, 13 labs</td></tr>
+              <tr><th>Coverage</th><td>62 task types, e.g. spin coating, powder batching, spray coating, ultrasonication</td></tr>
+              <tr><th>Capture</th><td>First-person, chest-mounted camera; researchers narrate each step</td></tr>
+              <tr><th>Ground truth</th><td>A researcher-written protocol for each procedure</td></tr>
+              <tr><th>Labels</th><td>Timestamped verb&ndash;object actions from a VLM</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="findings">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">What Happens in a Materials Lab?</h2>
+
+    <div class="takeaway">
+      A few general actions (pick, place, open, close) make up most of the work, followed by a long tail of 100+
+      specialized ones. How each action is done depends on the object.
+    </div>
+
+    <figure>
+      <img class="figure-img" src="./static/images/fig2_action_distribution.png"
+           alt="Bar charts on a log scale: the 20 most common VLM-predicted actions, the same actions in the researcher-written ground truth with their ground-truth ranks, and the long-tailed frequency of all predicted actions.">
+      <figcaption class="figure-caption">
+        <strong>Figure 2.</strong> Top 20 actions found by the VLM (a) and in researcher-written protocols (b),
+        and all VLM-detected actions (c). Log scale.
+      </figcaption>
+    </figure>
+    <div class="content" style="margin-top: 1rem;">
+      <ul>
+        <li>The top 20 actions cover <strong>~95%</strong> of all actions, with the same top four in both sources.</li>
+        <li>The VLM finds <strong>2.3&times;</strong> more actions than researchers write down: protocols skip routine
+          steps (picking up a container, adjusting a dial) that a robot still has to do.</li>
+      </ul>
+    </div>
+
+    <div class="content" style="margin-top: 1.5rem;">
+      <h3 class="title is-5">The object determines the motion</h3>
+      <p>
+        Picking up a wafer with tweezers and picking up a full beaker need different grasps and forces, so we
+        analyze <strong>action&ndash;object pairs</strong>. General verbs (pick, place) connect to almost every
+        object; specific verbs pair with one: dispense&ndash;liquid (410), scoop&ndash;powder (133).
+      </p>
+    </div>
+
+    <div class="pair-map" id="pair-map">
+      <div class="pm-controls">
+        <div class="seg" id="pm-view"><button class="is-active" data-v="network">Network</button><button data-v="matrix">Matrix</button></div>
+        <div class="seg" id="pm-src"><button class="is-active" data-v="2">Found in video</button><button data-v="3">Written in protocols</button></div>
+        <label class="pm-n">Top <strong id="pm-n-val">30</strong> of <span id="pm-total">3,683</span> pairs
+          <input type="range" id="pm-n" min="10" max="60" step="5" value="30" aria-label="Number of pairs shown"></label>
+      </div>
+      <div id="pm-chart"></div>
+      <div class="pm-legend">
+        <span><i style="background:#4a90d9"></i>Action&ndash;object pair (line width = count)</span>
+        <span><i style="background:#e8833a"></i>Learned by the robot: click to see its results</span>
+      </div>
+    </div>
+    <noscript>
+      <img class="figure-img" src="./static/images/fig3_action_object_heatmap.png"
+           alt="Heatmap of counts for nine actions versus ten objects; dispense-liquid, pick-sample and place-sample are the largest.">
+    </noscript>
+    <p class="figure-caption">
+      <strong>Figure 3, interactive.</strong> The most frequent action&ndash;object pairs, counted from the VLM's video
+      labels or the researchers' written protocols. Hover to highlight. Object spellings are merged
+      (e.g. &ldquo;sample_box&rdquo; and &ldquo;sample box&rdquo;).
+    </p>
+  </div>
+</section>
+
+<section class="section" id="annotation">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Labeling Video Automatically</h2>
+    <div class="content has-text-centered">
+      <p>
+        Gemini 3.6 Flash reads frames sampled every 0.5 s and lists the actions it sees; Llama 3.3 70B converts them
+        into <code>verb(object)</code> actions. Written protocols are used only for scoring, at about $1 per hour of footage.
+      </p>
+    </div>
+    <div class="table-container">
+      <table class="table is-fullwidth is-narrow results-table">
+        <thead>
+          <tr><th></th><th class="num">Median precision</th><th class="num">Median recall</th><th class="num">Median F1</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>All 442 videos</td><td class="num">0.63</td><td class="num">0.20</td><td class="num">0.23</td></tr>
+          <tr><td>209 complete recordings</td><td class="num"><strong>0.67</strong></td><td class="num"><strong>0.32</strong></td><td class="num"><strong>0.36</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="content">
+      When the VLM reports an action it is usually right, but it misses many steps, so it is better at finding common
+      actions than at reconstructing full procedures.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="robot">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Teaching a Robot Lab Tasks</h2>
+
+    <div class="columns">
+      <div class="column content">
+        <h4 class="title is-6">Setup</h4>
+        <ul>
+          <li>Two 6-DoF YAM arms, three cameras</li>
+          <li>VR teleoperation (Meta Quest 3)</li>
+          <li>~1 hour of demonstrations per task</li>
+        </ul>
+        <h4 class="title is-6">Approaches</h4>
+        <ul>
+          <li>&pi;<sub>0.5</sub>, fine-tuned on all tasks or one task</li>
+          <li>GPT-6.1 Sol and Dream-1, zero-shot (no demos)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="title is-5" style="margin-top: 1rem;">The ten most common action&ndash;object pairs</h3>
+  </div>
+
+  <div class="container is-max-widescreen" style="margin-top: 0.75rem;">
+    <div class="columns is-multiline is-mobile">
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Dispense liquid</div><div class="task-desc">Pour a vial into a cup.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Pick pipette</div><div class="task-desc">Lift a pipette out of a cup.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Pick wafer</div><div class="task-desc">Lift a flat wafer with tweezers.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Pick tweezers</div><div class="task-desc">Pick tweezers off the table.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Pick spatula</div><div class="task-desc">Pick a spatula off the table.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Place powder</div><div class="task-desc">Pour powder onto weighing paper.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Place wafer</div><div class="task-desc">Set a wafer into a container.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Pick powder bottle</div><div class="task-desc">Lift a powder bottle.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Scoop powder</div><div class="task-desc">Scoop powder from a bottle.</div></div>
+      </div>
+      <div class="column is-half-mobile is-one-third-tablet is-one-fifth-desktop">
+        <div class="task-card"><div class="task-name">Place pipette</div><div class="task-desc">Stand a pipette in a cup.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container is-max-widescreen" style="margin-top: 2rem;">
+    <h3 class="title is-4" id="results">Results</h3>
+    <p class="rb-hint">Click a task to see every teleoperation attempt and every autonomous trial.</p>
+    <div class="columns" id="results-browser">
+      <div class="column is-7">
+        <div class="rb-sort">Sort by
+          <div class="select is-small"><select id="rb-sort" aria-label="Sort tasks">
+            <option value="freq">How often it happens in the footage</option>
+            <option value="teleop">Teleoperation success</option>
+            <option value="0">&pi;0.5 all-tasks</option>
+            <option value="2">GPT-6.1 Sol (zero-shot)</option>
+          </select></div>
+        </div>
+        <div class="table-container">
+          <table class="table is-fullwidth is-narrow is-hoverable rb-table">
+            <thead>
+              <tr>
+                <th class="rb-task" rowspan="2">Task</th>
+                <th rowspan="2">In footage</th>
+                <th rowspan="2">Teleop</th>
+                <th colspan="2">Fine-tuned (~1 h of demos)</th>
+                <th colspan="2">Zero-shot (no demos)</th>
+              </tr>
+              <tr>
+                <th>&pi;<sub>0.5</sub> all</th>
+                <th>&pi;<sub>0.5</sub> single</th>
+                <th>Sol</th>
+                <th>Dream-1</th>
+              </tr>
+            </thead>
+            <tbody id="rb-body"></tbody>
+            <tfoot id="rb-foot"></tfoot>
+          </table>
+        </div>
+        <p class="figure-caption">
+          In footage: times the action&ndash;object pair appears in the lab videos. Teleop: success rate over one
+          hour of attempts. Policies: successes in 10 autonomous trials.
+        </p>
+      </div>
+      <div class="column"><div class="rb-detail" id="rb-detail"></div></div>
+    </div>
+    <noscript><p class="figure-caption">The interactive results need JavaScript; Figure 5 below has the same numbers.</p></noscript>
+  </div>
+
+  <div class="container is-max-desktop">
+
+    <div class="content" style="margin-top: 1rem;">
+      <ul>
+        <li><strong>An hour of demos is enough for simple picks and places.</strong></li>
+        <li><strong>Alignment-heavy tasks fail even when a human can teleoperate them</strong>: the policy lowers the
+          pipette beside the cup, never tilts to pour, or scoops outside the bottle.</li>
+        <li><strong>Demonstrations help</strong>: fine-tuned policies succeeded in 59 and 53 of 100 trials; zero-shot models in 35 and 14.</li>
+      </ul>
+    </div>
+
+    <details class="more">
+      <summary>Full results figures (teleoperation and autonomous)</summary>
+      <figure style="margin-top: 0.75rem;">
+        <img class="figure-img" src="./static/images/fig4_teleoperation.png"
+             alt="Two bar charts: average teleoperation completion time per task, with pick wafer slowest, and teleoperation success rate per task, with pick wafer lowest at 38%.">
+        <figcaption class="figure-caption"><strong>Figure 4.</strong> Teleoperation completion time and success rate.</figcaption>
+      </figure>
+      <figure style="margin-top: 1rem;">
+        <img class="figure-img" src="./static/images/fig5_autonomous.jpg"
+             alt="Bar charts of median completion time and success rate for teleoperation and the four autonomous approaches on each task, plus ten photos of the robot performing each task.">
+        <figcaption class="figure-caption"><strong>Figure 5.</strong> Autonomous completion time, success rate (95% Wilson CIs), and the robot performing each task.</figcaption>
+      </figure>
+    </details>
+
+  </div>
+</section>
+
+<section class="section" id="takeaways">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">What This Means for Your Lab</h2>
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="step-card">
+          <h4 class="title is-6"><i class="fas fa-layer-group"></i>&nbsp; A few skills cover most of the work</h4>
+          <p>Pick, place, open, and close, applied to many objects, cover most bench work.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="step-card">
+          <h4 class="title is-6"><i class="fas fa-flask"></i>&nbsp; No lab redesign needed</h4>
+          <p>The robot used ordinary pipettes, spatulas, tweezers, and vials.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="step-card">
+          <h4 class="title is-6"><i class="fas fa-hand-paper"></i>&nbsp; Teach by demonstration</h4>
+          <p>About an hour of teleoperated demonstrations was enough for simple picks and places.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="step-card">
+          <h4 class="title is-6"><i class="fas fa-exclamation-triangle"></i>&nbsp; Hard cases remain</h4>
+          <p>Thin wafers, pouring, and precise insertion still need a human.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="limitations">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-4">Limitations</h2>
+    <ul>
+      <li>The VLM misses many steps, so it can't yet reconstruct full procedures on its own.</li>
+      <li>Robot results use 10 trials per task with task-specific setups.</li>
+      <li>Each task is a single action&ndash;object pair; chaining them into full procedures is next.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{wnuk2026happens,
+  title   = {What Happens in a Materials Research Lab? A Dataset and Analysis of
+             Lab Work for Enabling a Generalized Robot Lab Assistant},
+  author  = {Wnuk, Alexandra and Long, Lucas and Seshadri, Shrikar and Rakshit, Ujaan and
+             Kohli, Nandika and Hernandez, Nicholas and Ozmen, Eren and Losego, Mark D. and
+             Kousik, Shreyas and Garg, Animesh},
+  year    = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<section class="section" id="acknowledgements" style="padding-top: 0;">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-4">Acknowledgements</h2>
+    <p>
+      We thank the researchers who recorded footage for this study: Mary-Kate Broadway, Alexandra Wnuk, Eren Ozmen,
+      Khari Fletcher, Mikis Mays, Donghyeok Roh, Matthew Yen, Thomas Jose Kallupurakel, Mahsa Namdari, Mitchell
+      Splett, Ziting Tian, Jakub Pepas, Jiaqi Nie, Hanwoong Kim, Danae Chipoco Haro, Mohammed Tahmid, Haodong Hu,
+      Xinyi Ding, Alec Balandin, Ariel Adadi, and Anirban Ghosh, as well as their PIs: Mark Losego, Juan-Pablo
+      Correa-Baena, Rosario Gerhardt, Matthew McDowell, Scott Danielsen, Ryan Lively, Antonio Facchetti, Anju Toor,
+      Hailong Chen, H. Jerri Qi, Marta Hatzell, Shucong Li, and Josh Kacher.
+    </p>
+    <p>
+      This research was supported by the Georgia Tech Institute for Matter and Systems and the Woodruff Innovation
+      Nexus Funds, the National Science Foundation (DMREF-2522686), and the Office of Naval Research
+      (N00014-21-1-2258). Any opinions, findings, and conclusions or recommendations expressed are those of the
+      authors and do not necessarily reflect the views of Georgia Tech, the National Science Foundation, or the
+      Office of Naval Research.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            Website adapted from the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> project page,
+            licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+            Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/data/lab.js"></script>
+<script src="./static/data/robot.js"></script>
+<script src="./static/data/pairs.js"></script>
+<script src="./static/js/results-browser.js"></script>
+<script src="./static/js/pair-map.js"></script>
+<script>
+  // Mobile navbar toggle
+  document.querySelectorAll('.navbar-burger').forEach(function (burger) {
+    burger.addEventListener('click', function () {
+      var menu = document.getElementById(burger.dataset.target);
+      burger.classList.toggle('is-active');
+      menu.classList.toggle('is-active');
+    });
+  });
+  document.querySelectorAll('#section-menu .navbar-item').forEach(function (link) {
+    link.addEventListener('click', function () {
+      document.querySelector('.navbar-burger').classList.remove('is-active');
+      document.getElementById('section-menu').classList.remove('is-active');
+    });
+  });
+
+  // Play task clips on hover/tap once real <video> elements replace the placeholders
+  document.querySelectorAll('.task-card video').forEach(function (v) {
+    v.addEventListener('mouseenter', function () { v.play(); });
+    v.addEventListener('mouseleave', function () { v.pause(); });
+    v.addEventListener('click', function () { v.paused ? v.play() : v.pause(); });
+  });
+
+  // Draft highlight toggle
+  var draftToggle = document.getElementById('toggle-drafts');
+  if (draftToggle) draftToggle.addEventListener('click', function () {
+    document.body.classList.toggle('hide-drafts');
+  });
+</script>
+
+</body>
+</html>
